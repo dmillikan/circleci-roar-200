@@ -8,10 +8,10 @@ commands:
           command: pipenv install
       - run:
           name: Validate Install
-          command: pipenv which runway
+          command: pipenv run which runway
       - run:
           name: Check version
-          command: pipenv runway --version
+          command: pipenv run runway --version
 
 jobs:
   main:
