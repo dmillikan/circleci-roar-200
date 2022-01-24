@@ -3,6 +3,7 @@ version: 2.1
 commands:
   install-runway:
     steps:
+      - checkout
       - run:
           name: Install Runway
           command: pipenv install
@@ -17,6 +18,8 @@ jobs:
   main:
     docker: 
       - image: cimg/python:3.10.0
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
     steps:
       - install-runway
 workflows:
