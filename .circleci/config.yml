@@ -17,7 +17,7 @@ commands:
 jobs:
   main:
     docker: 
-      - image: cimg/python:3.10.0
+      - image: cimg/python:3.8.9
         environment:
           PIPENV_VENV_IN_PROJECT: true
     steps:
