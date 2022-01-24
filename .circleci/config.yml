@@ -1,0 +1,26 @@
+version: 2.1
+
+commands:
+  install-runway:
+    steps:
+      - run:
+          name: Install Runway
+          command: pip install runway
+      - run:
+          name: Validate Install
+          command: which runway
+      - run:
+          name: Check version
+          command: runway --version
+
+jobs:
+  main:
+    docker: 
+      - image: cimg/python:3.9.10
+    steps:
+      - install-runway
+
+workflows:
+  main:
+    jobs:
+      - main
