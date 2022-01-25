@@ -6,7 +6,7 @@ commands:
       - checkout
       - run:
           name: Install Runway
-          command: pipenv install
+          command: pipenv sync
       - run:
           name: Validate Install
           command: pipenv run which runway
