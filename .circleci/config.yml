@@ -10,7 +10,7 @@ commands:
           command: |
             pip install pipenv
             pipenv sync
-      - save_cache: &pipsavecache
+      - save_cache:
           key: *pipcachekey
           paths:
             - ".venv"
