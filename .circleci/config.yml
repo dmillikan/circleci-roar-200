@@ -3,7 +3,6 @@ version: 2.1
 commands:
   install-runway:
     steps:
-      - checkout
       - run:
           name: Install Runway
           command: pipenv sync
@@ -21,6 +20,7 @@ jobs:
         environment:
           PIPENV_VENV_IN_PROJECT: true
     steps:
+      - checkout
       - install-runway
 workflows:
   main:
