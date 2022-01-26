@@ -1,14 +1,24 @@
 version: 2.1
 
+commands:
+  install-serverless-framework:
+    steps:
+      - run:
+          name: Install Serverless Framework
+          command: yarn add serverless
+      - run:
+          name: Validate Install
+          command: yarn run which sls
+      - run:
+          name: Check version
+          command: yarn run sls --version
 
 jobs:
   main:
     docker: 
-      - image: cimg/python:3.9.10
+      - image: cimg/node:lts
     steps:
-      - run:
-          name: "Hello, World!"
-          command: "echo Hello, World!"
+      - install-serverless-framework
 workflows:
   main:
     jobs:
