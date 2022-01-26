@@ -1,17 +1,21 @@
 version: 2.1
 
 commands:
-  install-serverless-framework:
+  setup-yarn-cache:
     steps:
+      - restore_cache: &yarnrestorecache
+          name: Restoring Yarn Package Cache
+          key: &yarncache yarn-packages-v1-{{ checksum "yarn.lock" }}
       - run:
-          name: Install Serverless Framework
-          command: yarn install
-      - run:
-          name: Validate Install
-          command: yarn run which sls
-      - run:
-          name: Check version
-          command: yarn run sls --version
+          name: Install Dependencies
+          no_output_timeout: &timeout 30m
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Caching Yarn Packages
+          key: *yarncache
+          paths:
+            - ~/.cache/yarn
+            - node_modules
 
 jobs:
   main:
@@ -19,7 +23,10 @@ jobs:
       - image: cimg/node:lts
     steps:
       - checkout
-      - install-serverless-framework
+      - setup-yarn-cache
+      - run:
+          name: Check version
+          command: yarn run sls --version
 workflows:
   main:
     jobs:
