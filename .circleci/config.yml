@@ -18,6 +18,7 @@ jobs:
     docker: 
       - image: cimg/node:lts
     steps:
+      - checkout
       - install-serverless-framework
 workflows:
   main:
