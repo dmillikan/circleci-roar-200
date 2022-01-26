@@ -5,7 +5,7 @@ commands:
     steps:
       - run:
           name: Install Serverless Framework
-          command: yarn add serverless@2.8.0
+          command: yarn install
       - run:
           name: Validate Install
           command: yarn run which sls
