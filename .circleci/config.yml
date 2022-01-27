@@ -10,7 +10,14 @@ commands:
           name: Install and Configure Node << parameters.version >>
           command: |
             wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-            source ~/.bashrc
+      - run:
+          name: debug
+          command: cat ~/.profile
+      - run:
+          name: Verify Install
+          command: command -v nvm
+      - run:
+          command: |
             nvm install << parameters.version >>
             nvm use << parameters.version >>
 
