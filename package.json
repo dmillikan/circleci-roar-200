@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": ">=16"
+    "node": ">=12 <13"
   },
   "dependencies": {
     "serverless": "^2.72.2"
