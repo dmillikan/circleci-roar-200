@@ -25,12 +25,12 @@ commands:
 
   setup-yarn-cache:
     steps:
-      - restore_cache: &yarnrestorecache
+      - restore_cache:
           name: Restoring Yarn Package Cache
           key: &yarncache yarn-packages-v1-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          no_output_timeout: &timeout 30m
+          shell: /bin/bash -eol pipefail
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
           name: Caching Yarn Packages
