@@ -1,5 +1,13 @@
 version: 2.1
 
+executors:
+  default:
+    docker: 
+      - image: cimg/python:3.8.9-node
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+    shell: /bin/bash -eol pipefail
+
 commands:
   change-node-version:
     parameters:
@@ -12,12 +20,10 @@ commands:
             wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
       - run:
           name: Verify NVM Install
-          shell: /bin/bash -eol pipefail
           command: |
             command -v nvm
       - run:
           name: Install Node << parameters.version >>
-          shell: /bin/bash -eol pipefail
           command: |
             nvm install << parameters.version >>
             nvm use << parameters.version >>
@@ -31,7 +37,6 @@ commands:
           key: &yarncache yarn-packages-v1-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          shell: /bin/bash -eol pipefail
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
           name: Caching Yarn Packages
@@ -56,10 +61,7 @@ commands:
 
 jobs:
   main:
-    docker: 
-      - image: cimg/python:3.8.9-node
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
+    executor: default
     steps:
       - checkout
       - setup-pip-cache
@@ -71,7 +73,6 @@ jobs:
       - setup-yarn-cache
       - run:
           name: Check version
-          shell: /bin/bash -eol pipefail
           command: yarn run sls --version
 
 workflows:
