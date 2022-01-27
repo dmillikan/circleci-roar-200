@@ -11,14 +11,13 @@ commands:
           command: |
             wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
       - run:
-          name: debug
-          command: cat ~/.profile
-      - run:
-          name: Verify Install
+          name: Verify NVM Install
+          shell: /bin/bash -eol pipefail
           command: |
-            source ~/.profile
             command -v nvm
       - run:
+          name: Install Node << parameters.version >>
+          shell: /bin/bash -eol pipefail
           command: |
             nvm install << parameters.version >>
             nvm use << parameters.version >>
