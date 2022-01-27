@@ -1,14 +1,32 @@
 version: 2.1
 
+commands:
+  setup-pip-cache:
+    steps:
+      - restore_cache:
+          name: Restoring pip cache
+          key: &pipcachekey pipcache-v1-pyv3-8-9-{{ checksum "Pipfile.lock" }}
+      - run:
+          command: |
+            pip install pipenv
+            pipenv sync
+      - save_cache:
+          key: *pipcachekey
+          paths:
+            - ".venv"
 
 jobs:
   main:
     docker: 
-      - image: cimg/python:3.9.10
+      - image: cimg/python:3.8.9
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
     steps:
+      - checkout
+      - setup-pip-cache
       - run:
-          name: "Hello, World!"
-          command: "echo Hello, World!"
+          name: Check version
+          command: pipenv run runway --version
 workflows:
   main:
     jobs:
