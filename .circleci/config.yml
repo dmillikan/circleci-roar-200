@@ -1,6 +1,22 @@
 version: 2.1
 
 commands:
+  setup-yarn-cache:
+    steps:
+      - restore_cache: &yarnrestorecache
+          name: Restoring Yarn Package Cache
+          key: &yarncache yarn-packages-v1-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          no_output_timeout: &timeout 30m
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Caching Yarn Packages
+          key: *yarncache
+          paths:
+            - ~/.cache/yarn
+            - node_modules
+  
   setup-pip-cache:
     steps:
       - restore_cache:
@@ -18,15 +34,14 @@ commands:
 jobs:
   main:
     docker: 
-      - image: cimg/python:3.8.9
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
+      - image: cimg/node:lts
     steps:
       - checkout
-      - setup-pip-cache
+      - setup-yarn-cache
       - run:
           name: Check version
-          command: pipenv run runway --version
+          command: yarn run sls --version
+
 workflows:
   main:
     jobs:
