@@ -22,7 +22,7 @@ commands:
             nvm install << parameters.version >>
             nvm use << parameters.version >>
             nvm alias default node
-            echo "nvm use node" > ~/.profile
+            echo "nvm use node" >> ~/.profile
 
   setup-yarn-cache:
     steps:
