@@ -15,7 +15,9 @@ commands:
           command: cat ~/.profile
       - run:
           name: Verify Install
-          command: command -v nvm
+          command: |
+            source ~/.profile
+            command -v nvm
       - run:
           command: |
             nvm install << parameters.version >>
