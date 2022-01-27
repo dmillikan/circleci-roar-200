@@ -37,6 +37,7 @@ jobs:
       - image: cimg/node:lts
     steps:
       - checkout
+      - setup-pip-cache
       - setup-yarn-cache
       - run:
           name: Check version
