@@ -21,6 +21,7 @@ commands:
           command: |
             nvm install << parameters.version >>
             nvm use << parameters.version >>
+            nvm alias default node
 
   setup-yarn-cache:
     steps:
