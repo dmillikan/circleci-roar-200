@@ -16,6 +16,20 @@ commands:
           paths:
             - ~/.cache/yarn
             - node_modules
+  
+  setup-pip-cache:
+    steps:
+      - restore_cache:
+          name: Restoring pip cache
+          key: &pipcachekey pipcache-v1-pyv3-8-9-{{ checksum "Pipfile.lock" }}
+      - run:
+          command: |
+            pip install pipenv
+            pipenv sync
+      - save_cache:
+          key: *pipcachekey
+          paths:
+            - ".venv"
 
 jobs:
   main:
@@ -27,6 +41,7 @@ jobs:
       - run:
           name: Check version
           command: yarn run sls --version
+
 workflows:
   main:
     jobs:
