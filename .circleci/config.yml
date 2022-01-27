@@ -30,7 +30,6 @@ commands:
           key: &yarncache yarn-packages-v1-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          shell: /bin/bash -eol pipefail
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - save_cache:
           name: Caching Yarn Packages
@@ -70,6 +69,7 @@ jobs:
       - setup-yarn-cache
       - run:
           name: Check version
+          shell: /bin/bash -eol pipefail
           command: yarn run sls --version
 
 workflows:
