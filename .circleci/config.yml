@@ -80,6 +80,8 @@ commands:
                     echo "Deployment Bucket Exists in Other AWS Account"
                     exit 1
                 fi
+            else
+              echo "Deployment Bucket Already Exists in AWS Account"
             fi
 
 jobs:
