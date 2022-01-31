@@ -87,6 +87,7 @@ commands:
 jobs:
   main:
     executor: default
+    resource_class: small
     parameters:
       environment:
         type: string
