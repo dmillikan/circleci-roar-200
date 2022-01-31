@@ -1,0 +1,59 @@
+service: serverless-http-api-dynamodb
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: '20201221'
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${sls:stage}
+  httpApi:
+    cors: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+functions:
+  create:
+    handler: src/create.create
+    events:
+      - httpApi:
+          path: /src
+          method: post
+
+  list:
+    handler: src/list.list
+    events:
+      - httpApi:
+          path: /src
+          method: get
+
+  get:
+    handler: src/get.get
+    events:
+      - httpApi:
+          path: /src/{id}
+          method: get
+
+  update:
+    handler: src/update.update
+    events:
+      - httpApi:
+          path: /src/{id}
+          method: put
+
+  delete:
+    handler: src/delete.delete
+    events:
+      - httpApi:
+          path: /src/{id}
+          method: delete

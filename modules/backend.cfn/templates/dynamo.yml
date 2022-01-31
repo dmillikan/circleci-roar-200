@@ -1,0 +1,52 @@
+# Anchors To Reduce Pasta
+Anchors:
+  AttributeDefinitions: &Attributes
+    - AttributeName: id
+      AttributeType: S
+  KeySchema: &Keys
+    - AttributeName: id
+      KeyType: HASH
+     
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  pTableName:
+    Type: String
+  pBillingMode:
+    Type: String
+    Default: PAY_PER_REQUEST
+    AllowedValues: [PAY_PER_REQUEST,PROVISIONED]
+  pDeletionPolicy:
+    Type: String
+    Default: Retain
+    AllowedValues: [Retain,Delete]
+  pProvisionedThroughputRead:
+    Type: Number
+    Default: 5
+  pProvisionedThroughputWrite:
+    Type: Number
+    Default: 5    
+
+Conditions:
+  IsProvisioned: !Equals [!Ref pBillingMode, PROVISIONED]
+
+Resources:
+  rDynamoDbTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: pDeletionPolicy
+    Properties:
+      AttributeDefinitions: *Attributes
+      KeySchema: *Keys
+      BillingMode: !Ref pBillingMode
+      ProvisionedThroughput: 
+        ReadCapcityUnits: !If [IsProvisioned, !Ref pProvisionedThroughputRead, 0]
+        WriteCapacityUnits: !If [IsProvisioned, !Ref pProvisionedThroughputWrite, 0]
+      TableName: !Ref pTableName
+
+Outputs:
+  BucketName:
+    Description: Table Name
+    Value: !Ref rDynamoDbTable
+  BucketArn:
+    Description: Table ARN
+    Value: !GetAtt rDynamoDbTable.Arn

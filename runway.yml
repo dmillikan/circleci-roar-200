@@ -6,5 +6,6 @@ deployments:
           repository: ${env CIRCLE_PROJECT_REPONAME::default=local-deploy}
           namespace: circleci.roar200-${env DEPLOY_ENVIRONMENT}
           cfngin_bucket: circleci.roar200-${env DEPLOY_ENVIRONMENT}-deployment-bucket
+          environment: ${env DEPLOY_ENVIRONMENT}
     regions:
       - us-east-1

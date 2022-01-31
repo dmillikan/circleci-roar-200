@@ -8,3 +8,8 @@ stacks:
   first-bucket:
     stack_name: first-bucket
     template_path: templates/bucket.yml
+
+  todos-dynamo-table:
+    stack_name: todos-dynamo-table
+    template_path: templates/dynamo.yml
+    pTableName: todos-${environment}
