@@ -104,4 +104,5 @@ jobs:
 workflows:
   main:
     jobs:
-      - main
+      - main:
+          context: AWS_DEV_CREDENTIALS
