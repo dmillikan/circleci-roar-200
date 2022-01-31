@@ -87,7 +87,7 @@ jobs:
     executor: default
     steps:
       - checkout
-      - aws/install
+      - aws-cli/install
       - make-bucket:
           bucket-name: circleci.roar205.1-deployment-bucket
       - setup-pip-cache
