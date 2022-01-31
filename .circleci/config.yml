@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs: 
+  aws-cli: circleci/aws-cli@2.0.6
+
 executors:
   default:
     docker: 
@@ -59,11 +62,40 @@ commands:
           paths:
             - ".venv"
 
+  make-bucket:
+    parameters:
+      bucket-name:
+        type: string
+    steps:
+      - run:
+          name: Make Bucket << parameters.bucket-name >>
+          command: |
+            if [ $(aws s3 ls | grep "<< parameters.bucket-name >>" | wc -l) -eq 0 ]
+            then
+                aws s3 mb "s3://<< parameters.bucket-name >>"
+                if [ $? -eq 0 ]
+                then
+                    echo "Deployment Bucket Created Successfully"
+                else
+                    echo "Deployment Bucket Exists in Other AWS Account"
+                    exit 1
+                fi
+            else
+              echo "Deployment Bucket Already Exists in AWS Account"
+            fi
+
 jobs:
   main:
     executor: default
+    resource_class: small
+    parameters:
+      environment:
+        type: string
     steps:
       - checkout
+      - aws-cli/install
+      - make-bucket:
+          bucket-name: circleci.roar200-<< parameters.environment >>-deployment-bucket
       - setup-pip-cache
       - run:
           name: Check version
@@ -78,4 +110,7 @@ jobs:
 workflows:
   main:
     jobs:
-      - main
+      - main:
+          name: Deploy Pre
+          context: AWS_DEV_CREDENTIALS
+          environment: pre
