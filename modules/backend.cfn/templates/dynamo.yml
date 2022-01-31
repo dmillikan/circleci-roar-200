@@ -72,7 +72,7 @@ Conditions:
 Resources:
   rDynamoDbTable:
     Type: AWS::DynamoDB::Table
-    DeletionPolicy: pDeletionPolicy
+    DeletionPolicy: !Ref pDeletionPolicy
     Properties:
       AttributeDefinitions:
         - AttributeName: id
