@@ -14,3 +14,5 @@ stacks:
     template_path: templates/dynamo.yml
     variables:
       pTableName: todos-${environment}
+      pAttribute0: "id,S"
+      pKey0: "id,HASH"
