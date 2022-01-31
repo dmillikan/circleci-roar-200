@@ -87,11 +87,14 @@ commands:
 jobs:
   main:
     executor: default
+    parameters:
+      environment:
+        type: string
     steps:
       - checkout
       - aws-cli/install
       - make-bucket:
-          bucket-name: circleci.roar205.1-deployment-bucket
+          bucket-name: circleci.roar200-<< parameters.environment >>-deployment-bucket
       - setup-pip-cache
       - run:
           name: Check version
@@ -107,4 +110,6 @@ workflows:
   main:
     jobs:
       - main:
+          name: Deploy Pre
           context: AWS_DEV_CREDENTIALS
+          environment: pre
