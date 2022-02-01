@@ -5,6 +5,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.create = (event, context, callback) => {
   const timestamp = new Date().getTime();
+  console.debug(event.body);
   const data = JSON.parse(event.body);
   if (typeof data.text !== "string") {
     console.error("Validation Failed");
