@@ -27,6 +27,12 @@ provider:
             - dynamodb:DeleteItem
           Resource: "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
+custom:
+  webpack:
+    includeModules: false # Node modules configuration for packaging
+    packager: 'yarn' # Packager that will be used to package your external modules
+    excludeFiles: todos/**/*.test.js # Provide a glob for files to ignore
+
 functions:
   create:
     handler: todos/create.create
