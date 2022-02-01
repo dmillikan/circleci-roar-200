@@ -106,7 +106,7 @@ commands:
           name: Serverless Deploy << parameters.environment >>
           environment:
             DEPLOY_ENVIRONMENT: << parameters.environment >>
-          command: yarn run cd << parameters.serverless-directory >> && sls deploy --stage $DEPLOY_ENVIRONMENT
+          command: yarn run sls deploy --stage $DEPLOY_ENVIRONMENT --config << parameters.serverless-directory >>/serverless.yml
 
 jobs:
   main:
