@@ -120,18 +120,18 @@ jobs:
       - aws-cli/install
       - make-bucket:
           bucket-name: circleci.roar200-<< parameters.environment >>-deployment-bucket
-      - setup-pip-cache
-      - run:
-          name: Check version
-          command: pipenv run runway --version
+      # - setup-pip-cache
+      # - run:
+      #     name: Check version
+      #     command: pipenv run runway --version
       - change-node-version:
           version: "12"
       - setup-yarn-cache
-      - run:
-          name: Check version
-          command: yarn run sls --version
-      - runway-deploy:
-          environment: << parameters.environment >>
+      # - run:
+      #     name: Check version
+      #     command: yarn run sls --version
+      # - runway-deploy:
+      #     environment: << parameters.environment >>
       - serverless-deploy:
           serverless-directory: todos
           environment: << parameters.environment >>
