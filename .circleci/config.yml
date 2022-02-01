@@ -99,9 +99,12 @@ commands:
     parameters:
       environment:
         type: string
+      serverless-directory:
+        type: string
     steps:
       - run:
           name: Serverless Deploy << parameters.environment >>
+          working_directory: << parameters.serverless-directory >>
           environment:
             DEPLOY_ENVIRONMENT: << parameters.environment >>
           command: yarn run sls deploy --stage $DEPLOY_ENVIRONMENT
@@ -131,7 +134,7 @@ jobs:
       - runway-deploy:
           environment: << parameters.environment >>
       - serverless-deploy:
-          working_directory: todos
+          serverless-directory: todos
           environment: << parameters.environment >>
 
 workflows:
