@@ -29,35 +29,35 @@ provider:
 
 functions:
   create:
-    handler: src/create.create
+    handler: todos/create.create
     events:
       - httpApi:
           path: /todos
           method: post
 
   list:
-    handler: src/list.list
+    handler: todos/list.list
     events:
       - httpApi:
           path: /todos
           method: get
 
   get:
-    handler: src/get.get
+    handler: todos/get.get
     events:
       - httpApi:
           path: /todos/{id}
           method: get
 
   update:
-    handler: src/update.update
+    handler: todos/update.update
     events:
       - httpApi:
           path: /todos/{id}
           method: put
 
   delete:
-    handler: src/delete.delete
+    handler: todos/delete.delete
     events:
       - httpApi:
           path: /todos/{id}
