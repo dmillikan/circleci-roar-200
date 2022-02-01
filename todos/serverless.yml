@@ -26,35 +26,35 @@ provider:
 
 functions:
   create:
-    handler: todos/create.create
+    handler: src/create.create
     events:
       - httpApi:
           path: /todos
           method: post
 
   list:
-    handler: todos/list.list
+    handler: src/list.list
     events:
       - httpApi:
           path: /todos
           method: get
 
   get:
-    handler: todos/get.get
+    handler: src/get.get
     events:
       - httpApi:
           path: /todos/{id}
           method: get
 
   update:
-    handler: todos/update.update
+    handler: src/update.update
     events:
       - httpApi:
           path: /todos/{id}
           method: put
 
   delete:
-    handler: todos/delete.delete
+    handler: src/delete.delete
     events:
       - httpApi:
           path: /todos/{id}
@@ -64,7 +64,6 @@ resources:
   Resources:
     TodosDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
       Properties:
         AttributeDefinitions:
           -

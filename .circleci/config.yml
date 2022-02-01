@@ -131,6 +131,7 @@ jobs:
       - runway-deploy:
           environment: << parameters.environment >>
       - serverless-deploy:
+          working_directory: todos
           environment: << parameters.environment >>
 
 workflows:
