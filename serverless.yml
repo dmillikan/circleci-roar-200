@@ -29,7 +29,6 @@ provider:
 
 custom:
   webpack:
-    # includeModules: false
     packager: 'yarn'
     excludeFiles: todos/**/*.test.js # Provide a glob for files to ignore
 
