@@ -29,8 +29,8 @@ provider:
 
 custom:
   webpack:
-    includeModules: false # Node modules configuration for packaging
-    packager: 'yarn' # Packager that will be used to package your external modules
+    includeModules: false
+    packager: 'yarn'
     excludeFiles: todos/**/*.test.js # Provide a glob for files to ignore
 
 functions:
