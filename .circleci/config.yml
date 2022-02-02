@@ -119,7 +119,8 @@ jobs:
       - checkout
       - aws-cli/install
       - make-bucket:
-          bucket-name: circleci.roar200-<< parameters.environment >>-deployment-bucket
+          # bucket-name: circleci.roar200-<< parameters.environment >>-deployment-bucket
+          bucket-name: $DEPLOYMENT_BUCKET
       - setup-pip-cache
       - run:
           name: Check version

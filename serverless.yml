@@ -9,7 +9,7 @@ provider:
   runtime: nodejs12.x
   lambdaHashingVersion: '20201221'
   deploymentBucket:
-    name: circleci.roar200-${env:DEPLOY_ENVIRONMENT}-deployment-bucket
+    name: ${env:DEPLOYMENT_BUCKET,'circleci.roar200-dev-deployment-bucket'}
   environment:
     DYNAMODB_TABLE: ${self:service}-${sls:stage}
   httpApi:
