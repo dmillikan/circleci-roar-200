@@ -160,6 +160,7 @@ workflows:
           environment: pre
       - validate:
           name: Validate Dev
+          context: AWS_DEV_CREDENTIALS
           environment: pre
           requires: 
             - Deploy Dev
