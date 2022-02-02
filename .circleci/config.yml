@@ -143,3 +143,7 @@ workflows:
           name: Deploy Pre
           context: AWS_DEV_CREDENTIALS
           environment: pre
+      - main:
+          name: Deploy Prod
+          context: AWS_PROD_CREDENTIALS
+          environment: preprod
