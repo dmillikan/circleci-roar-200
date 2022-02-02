@@ -106,7 +106,7 @@ if [ "${status_code}" -ge "200" ] && [ "${status_code}" -lt "300" ]; then
     if [ "${status_code}" -ge "200" ] && [ "${status_code}" -lt "300" ]; then
         if [ $(cat ${response_file} | wc -l) -eq 0 ]
         then
-            echo "Item Delete Successfully"
+            echo "Item Deleted Successfully"
         else
             echo "Items Still found After Delete"
             exit 1

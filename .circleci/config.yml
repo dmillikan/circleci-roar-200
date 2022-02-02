@@ -149,7 +149,8 @@ jobs:
           environment:
             DEPLOY_ENVIRONMENT: << parameters.environment >>
           working_directory: .circleci
-          command: chmod +x validate.sh && ./validate.sh
+          # command: chmod +x validate.sh && ./validate.sh
+          command: validate.sh
 
 workflows:
   main:
