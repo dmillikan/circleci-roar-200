@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-runway = "==1.15.1"
+runway = "==2.5.0"
 
 [dev-packages]
 
