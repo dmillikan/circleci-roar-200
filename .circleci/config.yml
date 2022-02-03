@@ -197,11 +197,9 @@ jobs:
           environment: << parameters.environment >>
 
 workflows:
-  main:
+  branch-workflow:
     when:
-      or:
-        - << pipeline.git.tag >>
-        - << pipeline.git.branch >>    
+      not: << pipeline.git.tag >>
     jobs:
       - plan:
           name: Plan Dev
@@ -225,6 +223,10 @@ workflows:
           environment: dev
           requires: 
             - Deploy Dev      
+  
+  tag-workflow:
+    when: << pipeline.git.tag >>
+    jobs:
       - main:
           name: Deploy Prod
           context: AWS_PROD_CREDENTIALS
@@ -232,5 +234,3 @@ workflows:
           filters:
             tags:
               only: /([1-9][0-9]+|[0-9])\.([1-9][0-9]+|[0-9])\.([1-9][0-9]+|[0-9])/
-            branches:
-              ignore: /.*/
