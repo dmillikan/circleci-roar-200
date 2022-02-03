@@ -203,24 +203,32 @@ workflows:
           name: Plan Dev
           context: AWS_DEV_CREDENTIALS
           environment: pre
-      # - main:
-      #     name: Deploy Dev
-      #     context: AWS_DEV_CREDENTIALS
-      #     environment: pre
-      # - validate:
-      #     name: Validate Dev
-      #     context: AWS_DEV_CREDENTIALS
-      #     environment: pre
-      #     requires: 
-      #       - Deploy Dev
-      # - hold:
-      #     name: Appove Prod
-      #     type: approval
-      #     requires: 
-      #       - Validate Dev
-      # - main:
-      #     name: Deploy Prod
-      #     context: AWS_PROD_CREDENTIALS
-      #     environment: preprod
-      #     requires:
-      #       - Appove Prod
+          filters:
+            branches:
+              only:
+                - /^feature\/.*/
+      - main:
+          name: Deploy Dev
+          context: AWS_DEV_CREDENTIALS
+          environment: pre
+          filters:
+            branches:
+              only:
+                - main
+      - validate:
+          name: Validate Dev
+          context: AWS_DEV_CREDENTIALS
+          environment: pre
+          requires: 
+            - Deploy Dev
+      - hold:
+          name: Appove Prod
+          type: approval
+          requires: 
+            - Validate Dev
+      - main:
+          name: Deploy Prod
+          context: AWS_PROD_CREDENTIALS
+          environment: preprod
+          requires:
+            - Appove Prod
