@@ -220,7 +220,7 @@ workflows:
       - validate:
           name: Validate Dev
           context: AWS_DEV_CREDENTIALS
-          environment: dev
+          environment: pre
           requires: 
             - Deploy Dev      
   
