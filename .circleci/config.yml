@@ -198,6 +198,10 @@ jobs:
 
 workflows:
   main:
+    when:
+      or:
+        - << pipeline.git.tag >>
+        - << pipeline.git.branch >>
     jobs:
       - plan:
           name: Plan Dev
