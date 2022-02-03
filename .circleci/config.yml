@@ -202,7 +202,7 @@ workflows:
       - plan:
           name: Plan Dev
           context: AWS_DEV_CREDENTIALS
-          environment: ${CIRCLE_BRANCH}
+          environment: pre
           filters:
             branches:
               only:
