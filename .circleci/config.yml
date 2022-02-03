@@ -1,11 +1,11 @@
 version: 2.1
 
-orbs: 
+orbs:
   aws-cli: circleci/aws-cli@2.0.6
 
 executors:
   default:
-    docker: 
+    docker:
       - image: cimg/python:3.8.9-node
         environment:
           PIPENV_VENV_IN_PROJECT: true
@@ -47,7 +47,7 @@ commands:
           paths:
             - ~/.cache/yarn
             - node_modules
-  
+
   setup-pip-cache:
     steps:
       - restore_cache:
@@ -202,7 +202,7 @@ workflows:
       - plan:
           name: Plan Dev
           context: AWS_DEV_CREDENTIALS
-          environment: pre
+          environment: ${CIRCLE_BRANCH}
           filters:
             branches:
               only:
@@ -219,12 +219,12 @@ workflows:
           name: Validate Dev
           context: AWS_DEV_CREDENTIALS
           environment: pre
-          requires: 
+          requires:
             - Deploy Dev
       - hold:
           name: Appove Prod
           type: approval
-          requires: 
+          requires:
             - Validate Dev
       - main:
           name: Deploy Prod
