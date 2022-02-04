@@ -132,6 +132,23 @@ commands:
             DEPLOY_ENVIRONMENT: << parameters.environment >>
           command: yarn run sls package --stage $DEPLOY_ENVIRONMENT
 
+  custom-checkout:
+    parameters:
+      merge:
+        type: boolean
+        default: false
+    steps:
+      - checkout
+      - when:
+          condition: 
+            and: 
+              - << parameters.merge >>
+              - $CIRCLE_PULL_REQUEST
+          steps:
+            - run:
+                name: Merge Pull Request
+                command: chmod +x .circleci/git-pr-merge.sh && .circleci/git-pr-merge.sh
+
 jobs:
   main:
     executor: default
@@ -139,8 +156,12 @@ jobs:
     parameters:
       environment:
         type: string
+      merge:
+        type: boolean
+        default: false
     steps:
-      - checkout
+      - custom-checkout:
+          merge: << parameters.merge >>
       - aws-cli/install
       - make-bucket:
           bucket-name: $DEPLOYMENT_BUCKET
@@ -165,8 +186,12 @@ jobs:
     parameters:
       environment:
         type: string
+      merge:
+        type: boolean
+        default: false
     steps:
-      - checkout
+      - custom-checkout:
+          merge: << parameters.merge >>
       - aws-cli/install
       - run:
           name: Validate << parameters.environment >>
@@ -181,8 +206,12 @@ jobs:
     parameters:
       environment:
         type: string
+      merge:
+        type: boolean
+        default: false
     steps:
-      - checkout
+      - custom-checkout:
+          merge: << parameters.merge >>
       - aws-cli/install
       - make-bucket:
           bucket-name: $DEPLOYMENT_BUCKET
@@ -205,6 +234,7 @@ workflows:
           name: Plan Dev
           context: AWS_DEV_CREDENTIALS
           environment: pre
+          merge: true
           filters:
             branches:
               only:
